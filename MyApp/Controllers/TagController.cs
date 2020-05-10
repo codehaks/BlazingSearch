@@ -18,11 +18,11 @@ namespace MyApp.Controllers
 
         [Route("api/tag")]
         public IActionResult Get() =>
-             Ok(_db.Tags);
+             Ok(_db.Tags.Take(1000));
 
         [Route("api/tag/{term}")]
         public IActionResult GetSearch(string term) =>
-             Ok(_db.Tags.Where(t=>t.Name.StartsWith(term)).Take(1000));
+             Ok(_db.Tags.Where(t=>t.Name.StartsWith(term)));
 
 
     }
