@@ -13,11 +13,13 @@
     <h1>Tag your friends...</h1>
 
     <div class="form-group">
-        <v-select taggable multiple
+        <v-select multiple
                   v-model="selectedTags"
-                  label="name"
+                  label="name" 
+                  :filterable="true" 
                   :options="tags"
-                  :reduce="tag => (tag.name+':'+tag.id)" />
+                  @@search="searchTags"
+                   />
     </div>
 </div>
 
@@ -35,10 +37,22 @@
             },
             mounted: function () {
 
-                this.getTags();
+                //this.getTags();
             }
             ,
             methods: {
+                
+
+                searchTags: function (term, loading) {
+                    loading(true);
+                    var vm = this;
+                    $.ajax({ url: "/api/tag/"+term, method: "GET" })
+                        .done(function (data) {
+                            vm.tags = data;
+                            loading(false);
+                            return data;
+                        });
+                },
                 getTags: function () {
                     var vm = this;
                     $.ajax({ url: "/api/tag", method: "GET" })
