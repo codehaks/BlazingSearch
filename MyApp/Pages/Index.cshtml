@@ -4,5 +4,51 @@
     ViewData["Title"] = "Home";
 }
 
-<h1>MyApp</h1>
+@section styles{
+    <link href="~/lib/vue-select/vue-select.css" rel="stylesheet" />
+
+}
+
+<div id="app">
+    <h1>Tag your friends...</h1>
+
+    <div class="form-group">
+        <v-select taggable multiple
+                  v-model="selectedTags"
+                  label="name"
+                  :options="tags"
+                  :reduce="tag => (tag.name+':'+tag.id)" />
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/lib/vue/vue.js"></script>
+    <script src="~/lib/vue-select/vue-select.js"></script>
+
+    <script>
+        Vue.component('v-select', VueSelect.VueSelect);
+        var app = new Vue({
+            el: "#app",
+            data: {
+                tags: [],
+                selectedTags: []
+            },
+            mounted: function () {
+
+                this.getTags();
+            }
+            ,
+            methods: {
+                getTags: function () {
+                    var vm = this;
+                    $.ajax({ url: "/api/tag", method: "GET" })
+                        .done(function (data) {
+                            vm.tags = data;
+                        });
+                },
+            }
+        });
+    </script>
+
+}
 
