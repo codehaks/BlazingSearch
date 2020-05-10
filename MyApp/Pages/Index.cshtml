@@ -44,6 +44,9 @@
                 
 
                 searchTags: function (term, loading) {
+                    if (term.length<3) {
+                        return;
+                    }
                     loading(true);
                     var vm = this;
                     $.ajax({ url: "/api/tag/"+term, method: "GET" })

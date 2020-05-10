@@ -18,7 +18,7 @@ namespace MyApp.Controllers
 
         [Route("api/tag")]
         public IActionResult Get() =>
-             Ok(_db.Tags.Take(2_000));
+             Ok(_db.Tags);
 
         [Route("api/tag/{term}")]
         public IActionResult GetSearch(string term) =>
