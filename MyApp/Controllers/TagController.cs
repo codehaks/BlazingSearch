@@ -26,7 +26,7 @@ namespace MyApp.Controllers
 
         [Route("api/tag/{term}")]
         public IActionResult GetSearch(string term) =>
-             Ok(_db.HashGetAll("tags").Select(h => new { Id = h.Name.ToString(), Name = h.Value.ToString() }).Where(t => t.Name.StartsWith(term)));
+             Ok(_db.HashGetAll("tags").Select(h => new { Id = h.Name.ToString(), Name = h.Value.ToString() }).Where(t => t.Name.StartsWith(term)).OrderBy(t=>t.Name.Length));
 
 
     }
